@@ -3,88 +3,226 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Situs Paling Gokil di Internet! 🎉</title>
+    <title>YouTube Clone - Latihan Front-end</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* CSS Kustom */
-        body {
-            /* Latar Belakang Biru Muda untuk kesan 'langit' atau 'segar' */
-            background-color: #f0f8ff; /* AliceBlue, sangat muda */
+        :root {
+            --yt-red: #ff0000;
+            --yt-text: #0f0f0f;
+            --yt-gray: #f9f9f9;
         }
-        .hero-section {
-            background-color: #007bff; /* Biru terang Bootstrap */
-            color: white;
-            padding: 80px 0;
+
+        body {
+            background-color: var(--yt-gray); /* Latar belakang abu-abu muda */
+            font-family: Roboto, Arial, sans-serif;
+        }
+
+        /* Navigasi Atas (Header) */
+        .navbar-custom {
+            background-color: white;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo-text {
+            color: var(--yt-text);
+            font-weight: 700;
+            letter-spacing: -1px;
+            font-size: 1.5rem;
+        }
+        .logo-text span {
+            color: var(--yt-red);
+            font-size: 1.8rem;
+        }
+        .search-input {
+            border-radius: 20px 0 0 20px;
+            border-color: #ccc;
+        }
+        .search-button {
+            border-radius: 0 20px 20px 0;
+            background-color: var(--yt-gray);
+            border-color: #ccc;
+            color: var(--yt-text);
+        }
+
+        /* Sidebar Kiri */
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            background-color: white;
+            padding-top: 20px;
+            position: fixed;
+            top: 56px; /* Di bawah navbar */
+            left: 0;
+            overflow-y: auto;
+            border-right: 1px solid #ddd;
+        }
+        .sidebar-item {
+            padding: 10px 24px;
+            color: var(--yt-text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        .sidebar-item:hover, .sidebar-item.active {
+            background-color: #eee;
+        }
+        .sidebar-item i {
+            margin-right: 20px;
+            width: 20px;
+            text-align: center;
+        }
+        .sidebar hr {
+            margin: 10px 0;
+        }
+
+        /* Konten Utama (Video Grid) */
+        .main-content {
+            margin-left: 240px; /* Jarak dari sidebar */
+            padding: 20px;
+        }
+        .video-card {
             margin-bottom: 30px;
         }
-        .content-card {
-            background-color: white;
-            border: 1px solid #dee2e6;
+        .thumbnail {
+            width: 100%;
+            height: auto;
             border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-        .funny-button:hover {
-            transform: scale(1.05);
-            transition: transform 0.3s;
-            box-shadow: 0 0 15px rgba(255, 255, 0, 0.7); /* Efek cahaya kuning */
+        .video-info {
+            display: flex;
+            margin-top: 10px;
+        }
+        .channel-photo {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .video-title {
+            font-weight: 500;
+            font-size: 1rem;
+            line-height: 1.4;
+            color: var(--yt-text);
+            text-decoration: none;
+        }
+        .video-meta {
+            color: #606060;
+            font-size: 0.85rem;
+            line-height: 1.2;
+        }
+
+        /* Responsif untuk layar kecil */
+        @media (max-width: 992px) {
+            .sidebar {
+                display: none; /* Sembunyikan sidebar di mobile */
+            }
+            .main-content {
+                margin-left: 0;
+            }
         }
     </style>
 </head>
 <body>
 
-    <header class="hero-section text-center">
-        <div class="container">
-            <h1 class="display-3">Selamat Datang di Portal Kegilaan! 😂</h1>
-            <p class="lead">Kami tidak tahu apa yang kamu cari, tapi kami jamin ini akan sia-sia!</p>
-            <a href="#section2" class="btn btn-warning btn-lg funny-button">Klik Saya Sekarang (Tidak Ada Hadiah)</a>
-        </div>
-    </header>
-    
-    <main class="container">
-        <div class="row text-center">
-            
-            <div class="col-md-4 mb-4">
-                <div class="content-card">
-                    <h2 class="text-primary">Kenapa Biru? 💙</h2>
-                    <p>Karena kalau hijau, nanti jadi rumput. Kalau merah, nanti jadi stopan. Biru itu keren, seperti air di toilet!</p>
-                    <button class="btn btn-outline-primary funny-button">Tombol Penting</button>
-                </div>
-            </div>
-            
-            <div class="col-md-4 mb-4" id="section2">
-                <div class="content-card">
-                    <h2 class="text-success">Apa Gunanya? 🤷‍♂️</h2>
-                    <p>Sama sekali tidak ada. Tujuan website ini adalah menguji kesabaran kamu dan menghabiskan waktu luangmu.</p>
-                    <button class="btn btn-outline-success funny-button">Tombol Tidak Penting</button>
-                </div>
-            </div>
-            
-            <div class="col-md-4 mb-4">
-                <div class="content-card">
-                    <h2 class="text-danger">Testimoni Palsu 😜</h2>
-                    <p>"Website ini mengubah hidup saya. Saya jadi malas!" - Seorang Pengguna Fiksi. <br> **10/10**</p>
-                    <button class="btn btn-outline-danger funny-button">Tombol Rahasia</button>
-                </div>
+    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center me-4" href="#">
+                <i class="fas fa-bars me-3 text-secondary d-none d-lg-block"></i>
+                <span class="logo-text"><span class="me-1"><i class="fab fa-youtube"></i></span>YouTube</span>
+            </a>
+
+            <form class="d-flex mx-auto col-12 col-md-6 col-lg-5">
+                <input class="form-control search-input" type="search" placeholder="Cari" aria-label="Cari">
+                <button class="btn search-button" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+
+            <div class="d-flex align-items-center ms-auto">
+                <button class="btn btn-light rounded-circle me-2"><i class="fas fa-video"></i></button>
+                <button class="btn btn-light rounded-circle me-2"><i class="fas fa-bell"></i></button>
+                <img src="https://via.placeholder.com/32/007bff/ffffff?text=U" class="rounded-circle" alt="User" width="32" height="32">
             </div>
         </div>
+    </nav>
+
+    <div class="sidebar d-none d-lg-block">
+        <a href="#" class="sidebar-item active"><i class="fas fa-home"></i> Beranda</a>
+        <a href="#" class="sidebar-item"><i class="fas fa-fire"></i> Trending</a>
+        <a href="#" class="sidebar-item"><i class="fab fa-youtube-square"></i> Langganan</a>
 
         <hr>
 
-        <div class="row mt-5">
-            <div class="col-12">
-                <blockquote class="blockquote text-center">
-                    <p class="mb-0">"Kesederhanaan adalah kunci. Tapi terkadang, kegilaan juga perlu."</p>
-                    <footer class="blockquote-footer">Albert Einstein (mungkin tidak pernah bilang ini)</footer>
-                </blockquote>
-            </div>
+        <a href="#" class="sidebar-item"><i class="fas fa-folder"></i> Koleksi</a>
+        <a href="#" class="sidebar-item"><i class="fas fa-history"></i> Histori</a>
+        <a href="#" class="sidebar-item"><i class="fas fa-play-circle"></i> Video Anda</a>
+        <a href="#" class="sidebar-item"><i class="fas fa-clock"></i> Tonton Nanti</a>
         </div>
 
-    </main>
+    <div class="main-content">
+        <div class="row">
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 video-card">
+                <a href="#"><img src="https://via.placeholder.com/480x270?text=Thumbnail+Video+1" alt="Thumbnail" class="thumbnail"></a>
+                <div class="video-info">
+                    <img src="https://via.placeholder.com/36/ff0000/ffffff?text=C1" alt="Channel" class="channel-photo">
+                    <div>
+                        <a href="#" class="video-title">Judul Video yang Menarik dan Panjang</a>
+                        <div class="video-meta">
+                            Nama Channel<br>
+                            1,2 Juta x ditonton &bull; 2 jam lalu
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <footer class="text-center py-3 mt-5 bg-dark text-white">
-        <p>&copy; 2025 Situs Gokil. Jangan Lupa Kembali Lagi (Untuk Apa?). Dibuat dengan Bootstrap.</p>
-    </footer>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 video-card">
+                <a href="#"><img src="https://via.placeholder.com/480x270?text=Thumbnail+Video+2" alt="Thumbnail" class="thumbnail"></a>
+                <div class="video-info">
+                    <img src="https://via.placeholder.com/36/00ff00/ffffff?text=C2" alt="Channel" class="channel-photo">
+                    <div>
+                        <a href="#" class="video-title">Review Game Terbaru yang Bikin Heboh!</a>
+                        <div class="video-meta">
+                            Game Mania<br>
+                            500 Ribu x ditonton &bull; 1 hari lalu
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 video-card">
+                <a href="#"><img src="https://via.placeholder.com/480x270?text=Thumbnail+Video+3" alt="Thumbnail" class="thumbnail"></a>
+                <div class="video-info">
+                    <img src="https://via.placeholder.com/36/0000ff/ffffff?text=C3" alt="Channel" class="channel-photo">
+                    <div>
+                        <a href="#" class="video-title">Cara Cepat Belajar Coding dalam 10 Menit</a>
+                        <div class="video-meta">
+                            KodingSantai<br>
+                            80 Ribu x ditonton &bull; 1 minggu lalu
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 video-card">
+                <a href="#"><img src="https://via.placeholder.com/480x270?text=Thumbnail+Video+4" alt="Thumbnail" class="thumbnail"></a>
+                <div class="video-info">
+                    <img src="https://via.placeholder.com/36/ffff00/000000?text=C4" alt="Channel" class="channel-photo">
+                    <div>
+                        <a href="#" class="video-title">Tips Perjalanan Murah ke Eropa</a>
+                        <div class="video-meta">
+                            Backpacker Seru<br>
+                            2 Juta x ditonton &bull; 3 bulan lalu
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
