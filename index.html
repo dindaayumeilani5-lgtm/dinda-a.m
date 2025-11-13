@@ -3,227 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>YouTube Clone - Latihan Front-end</title>
+    <title>YouTube Simpel - Replika</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        /* CSS Kustom */
-        :root {
-            --yt-red: #ff0000;
-            --yt-text: #0f0f0f;
-            --yt-gray: #f9f9f9;
-        }
-
+        /* Gaya kustom opsional untuk YouTube Simpel */
         body {
-            background-color: var(--yt-gray); /* Latar belakang abu-abu muda */
-            font-family: Roboto, Arial, sans-serif;
+            background-color: #f9f9f9;
         }
-
-        /* Navigasi Atas (Header) */
-        .navbar-custom {
-            background-color: white;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .logo-text {
-            color: var(--yt-text);
-            font-weight: 700;
-            letter-spacing: -1px;
-            font-size: 1.5rem;
-        }
-        .logo-text span {
-            color: var(--yt-red);
-            font-size: 1.8rem;
-        }
-        .search-input {
-            border-radius: 20px 0 0 20px;
-            border-color: #ccc;
-        }
-        .search-button {
-            border-radius: 0 20px 20px 0;
-            background-color: var(--yt-gray);
-            border-color: #ccc;
-            color: var(--yt-text);
-        }
-
-        /* Sidebar Kiri */
         .sidebar {
-            width: 240px;
+            /* Menyesuaikan tinggi sidebar agar setinggi viewport */
             height: 100vh;
-            background-color: white;
+            /* Warna latar belakang mirip YouTube (putih atau lebih gelap) */
+            background-color: #ffffff;
             padding-top: 20px;
-            position: fixed;
-            top: 56px; /* Di bawah navbar */
-            left: 0;
-            overflow-y: auto;
-            border-right: 1px solid #ddd;
+            /* Memastikan sidebar berada di lapisan atas saat fix/sticky */
+            z-index: 1020; 
         }
-        .sidebar-item {
-            padding: 10px 24px;
-            color: var(--yt-text);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            font-size: 0.9rem;
-            margin-bottom: 5px;
-        }
-        .sidebar-item:hover, .sidebar-item.active {
-            background-color: #eee;
-        }
-        .sidebar-item i {
-            margin-right: 20px;
-            width: 20px;
-            text-align: center;
-        }
-        .sidebar hr {
-            margin: 10px 0;
-        }
-
-        /* Konten Utama (Video Grid) */
-        .main-content {
-            margin-left: 240px; /* Jarak dari sidebar */
-            padding: 20px;
+        .video-thumbnail {
+            width: 100%;
+            height: 200px;
+            background-color: #cccccc; /* Placeholder abu-abu */
+            border-radius: 8px;
+            margin-bottom: 10px;
         }
         .video-card {
             margin-bottom: 30px;
         }
-        .thumbnail {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-        }
-        .video-info {
-            display: flex;
-            margin-top: 10px;
-        }
-        .channel-photo {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-        .video-title {
-            font-weight: 500;
-            font-size: 1rem;
-            line-height: 1.4;
-            color: var(--yt-text);
-            text-decoration: none;
-        }
-        .video-meta {
-            color: #606060;
-            font-size: 0.85rem;
-            line-height: 1.2;
-        }
-
-        /* Responsif untuk layar kecil */
-        @media (max-width: 992px) {
-            .sidebar {
-                display: none; /* Sembunyikan sidebar di mobile */
-            }
-            .main-content {
-                margin-left: 0;
-            }
+        .navbar-custom {
+            background-color: #ffffff; /* Warna navbar YouTube */
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light navbar-custom">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar-custom">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center me-4" href="#">
-                <i class="fas fa-bars me-3 text-secondary d-none d-lg-block"></i>
-                <span class="logo-text"><span class="me-1"><i class="fab fa-youtube"></i></span>YouTube</span>
+            <a class="navbar-brand text-danger fw-bold" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-youtube" viewBox="0 0 16 16">
+                    <path d="M8.051 1.999h.001c.84 0 1.57.18 2.21.54.6.34 1.07.8 1.39 1.34l.03.07.01.07.001.07 1.01 4.54c.15.63.23 1.28.23 1.95v.001c0 .66-.08 1.31-.23 1.95l-1.01 4.54-.001.07-.01.07-.03.07c-.32.54-.79 1-1.39 1.34-.64.36-1.37.54-2.21.54h-.001c-.84 0-1.57-.18-2.21-.54-.6-.34-1.07-.8-1.39-1.34l-.03-.07-.01-.07-.001-.07-1.01-4.54c-.15-.63-.23-1.28-.23-1.95v-.001c0-.66.08-1.31.23-1.95l1.01-4.54.001-.07.01-.07.03-.07c.32-.54.79-1 1.39-1.34.64-.36 1.37-.54 2.21-.54zM8 4.25a3.75 3.75 0 1 0 0 7.5 3.75 3.75 0 0 0 0-7.5z"/>
+                    <path d="M8 5a2.75 2.75 0 1 1 0 5.5 2.75 2.75 0 0 1 0-5.5z"/>
+                </svg>
+                 YouTube Simpel
             </a>
-
-            <form class="d-flex mx-auto col-12 col-md-6 col-lg-5">
-                <input class="form-control search-input" type="search" placeholder="Cari" aria-label="Cari">
-                <button class="btn search-button" type="submit"><i class="fas fa-search"></i></button>
+            
+            <form class="d-flex mx-auto" style="width: 50%;">
+                <input class="form-control me-2" type="search" placeholder="Cari" aria-label="Search">
+                <button class="btn btn-outline-secondary" type="submit">Cari</button>
             </form>
-
-            <div class="d-flex align-items-center ms-auto">
-                <button class="btn btn-light rounded-circle me-2"><i class="fas fa-video"></i></button>
-                <button class="btn btn-light rounded-circle me-2"><i class="fas fa-bell"></i></button>
-                <img src="https://via.placeholder.com/32/007bff/ffffff?text=U" class="rounded-circle" alt="User" width="32" height="32">
+            
+            <div>
+                <button class="btn btn-light me-2"><i class="bi bi-bell"></i>🔔</button>
+                <button class="btn btn-secondary rounded-circle">👤</button>
             </div>
         </div>
     </nav>
 
-    <div class="sidebar d-none d-lg-block">
-        <a href="#" class="sidebar-item active"><i class="fas fa-home"></i> Beranda</a>
-        <a href="#" class="sidebar-item"><i class="fas fa-fire"></i> Trending</a>
-        <a href="#" class="sidebar-item"><i class="fab fa-youtube-square"></i> Langganan</a>
+    <div style="height: 60px;"></div>
 
-        <hr>
-
-        <a href="#" class="sidebar-item"><i class="fas fa-folder"></i> Koleksi</a>
-        <a href="#" class="sidebar-item"><i class="fas fa-history"></i> Histori</a>
-        <a href="#" class="sidebar-item"><i class="fas fa-play-circle"></i> Video Anda</a>
-        <a href="#" class="sidebar-item"><i class="fas fa-clock"></i> Tonton Nanti</a>
-        </div>
-
-    <div class="main-content">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 video-card">
-                <img src="resep kue pukis pandan.jepg" alt=DINDA" class="thumbnail"></a>
-                <div class="video-info">
-                    <img src="resep kue pukis pandan.jepg" alt="Channel" class="channel-photo">
-                    <div>
-                        <a href="#" class="video-title">Resep Kue Pukis Pandan</a>
-                        <div class="video-meta">
-                            dinda<br>
-                            990 ribu x ditonton &bull; 2 jam lalu
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 video-card">
-                <a href="#"><img src="es_cendol_nangka jpg.jpg"></a>
-                <div class="video-info">
-                    <img src="es_cendol_nangka jpg.jpg" class="channel-photo">
-                    <div>
-                        <a href="#" class="Resep Es Cendol Nangka Segar Dan Enak/a>
-                        <div class="video-meta">
-                            ayu<br>
-                            500 Ribu x ditonton &bull; 1 hari lalu
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 video-card">
-                <a href="#"><img src="ayam_geprek(1)jpg.png" class="thumbnail"></a>
-                <div class="video-info">
-                    <img src="ayam_geprek(1)jpg.png" class="channel-photo">
-                    <div>
-                        <a href="#" class="video-title">Cobain Resep Ayam Geprek Yang Enak dan Pedas</a>
-                        <div class="video-meta">
-                            meilani<br>
-                            390 Ribu x ditonton &bull; 1 minggu lalu
-                        </div>
-                    </div>
-                </div>
-            </div>
             
-            <div class="col-12 col-sm-6 col-md-4 col-lg-3 video-card">
-                <a href="#"><img src="https://via.placeholder.com/480x270?text=Thumbnail+Video+4" alt="Thumbnail" class="thumbnail"></a>
-                <div class="video-info">
-                    <img src="https://via.placeholder.com/36/ffff00/000000?text=C4" alt="Channel" class="channel-photo">
-                    <div>
-                        <a href="#" class="video-title">Tips Perjalanan Murah ke Eropa</a>
-                        <div class="video-meta">
-                            Backpacker Seru<br>
-                            2 Juta x ditonton &bull; 3 bulan lalu
-                        </div>
-                    </div>
-                </div>
+            <div class="col-lg-2 d-none d-lg-block sidebar sticky-top">
+                <ul class="nav flex-column">
+                    <li class="nav-item mb-2">
+                        <a class="nav-link active text-dark fw-bold" href="#">🏠 Beranda</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-dark" href="#">▶️ Shorts</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-dark" href="#">➕ Langganan</a>
+                    </li>
+                    <li class="nav-item mb-4"><hr></li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-dark" href="#">📂 Koleksi</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link text-dark" href="#">⏱️ Tonton Nanti</a>
+                    </li>
+                </ul>
             </div>
 
-            </div>
+            <main class="col-lg-10 p-4">
+                <h3 class="mb-4">🔥 Rekomendasi Video</h3>
+                
+                <div class="row">
+                    
+                    <div class="col-md-6 col-lg-3 video-card">
+                        <div class="video-thumbnail">
+                            </div>
+                        <h5>Judul Video Pertama yang Menarik</h5>
+                        <p class="text-muted small">Nama Channel | 100K ditonton | 1 hari lalu</p>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 video-card">
+                        <div class="video-thumbnail">
+                            </div>
+                        <h5>Review Produk Terbaru dan Unboxing</h5>
+                        <p class="text-muted small">Channel Teknologi | 50K ditonton | 3 jam lalu</p>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 video-card">
+                        <div class="video-thumbnail">
+                            </div>
+                        <h5>Tutorial Coding Simpel untuk Pemula</h5>
+                        <p class="text-muted small">Channel Edukasi | 20K ditonton | 5 hari lalu</p>
+                    </div>
+                    
+                    <div class="col-md-6 col-lg-3 video-card">
+                        <div class="video-thumbnail">
+                            </div>
+                        <h5>Musik Santai untuk Belajar dan Bekerja</h5>
+                        <p class="text-muted small">Channel Musik | 500K ditonton | 2 minggu lalu</p>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 video-card">
+                        <div class="video-thumbnail"></div>
+                        <h5>Vlog Perjalanan ke Gunung Bromo</h5>
+                        <p class="text-muted small">Channel Traveling | 70K ditonton | 2 hari lalu</p>
+                    </div>
+
+                    <div class="col-md-6 col-lg-3 video-card">
+                        <div class="video-thumbnail"></div>
+                        <h5>Resep Masakan Enak Cepat Saji</h5>
+                        <p class="text-muted small">Channel Masak | 90K ditonton | 4 jam lalu</p>
+                    </div>
+                    
+                    </div>
+            </main>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+   
