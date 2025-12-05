@@ -3,79 +3,253 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ Website Simpel [Dinda Ayu Meilani] 🤪</title>
+    <title>Kuis Belajar Sehat</title>
+    <!-- Memuat Tailwind CSS dari CDN untuk styling modern -->
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800&display=swap');
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f0f8ff; /* Warna latar belakang biru muda */
-            color: #333;
-            text-align: center;
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #a7f3d0 0%, #6ee7b7 100%); /* Latar belakang gradient hijau */
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .container {
+        .quiz-card {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 1.5rem; /* Sudut membulat */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
             max-width: 600px;
-            margin: auto;
-            padding: 20px;
-            border: 3px dashed #ff69b4; /* Garis putus-putus lucu */
-            border-radius: 15px;
-            background-color: #ffffff;
+            width: 95%;
+            transition: all 0.3s ease-in-out;
         }
-        h1 {
-            color: #ff4500; /* Oranye kemerahan */
-            font-size: 2.5em;
+        .answer-btn {
+            @apply w-full text-left py-3 px-4 rounded-xl text-lg font-semibold border-2 border-indigo-400 text-indigo-800 bg-indigo-50 hover:bg-indigo-200 transition duration-200 shadow-md;
         }
-        p {
-            line-height: 1.6;
-            margin-bottom: 20px;
+        .answer-btn.correct {
+            @apply bg-green-500 text-white border-green-600 shadow-xl;
         }
-        .joke {
-            font-style: italic;
-            color: #008000; /* Hijau gelap */
-            margin-top: 30px;
+        .answer-btn.incorrect {
+            @apply bg-red-500 text-white border-red-600 shadow-xl;
         }
-        .footer {
-            margin-top: 40px;
-            font-size: 0.8em;
-            color: #777;
+        .start-btn, .restart-btn {
+            @apply w-full py-4 text-xl font-bold rounded-full text-white bg-indigo-600 hover:bg-indigo-700 transition duration-200 shadow-lg hover:shadow-xl;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>Halo! Saya [Nama Anda] 👋</h1>
+    <div id="quiz-container" class="quiz-card">
 
-        <p>
-            Selamat datang di markas digital saya yang sangat **lucu**. 
-            Saya sedang memasak makanan favorit saya.
-            **P.S.** yang saya suka dari kecil... *membuat kue*.
-        </p>
+        <!-- Area Judul dan Status -->
+        <h1 class="text-3xl font-extrabold text-gray-800 text-center mb-6">Kuis Belajar Sehat 🧠</h1>
+        <div id="progress-area" class="text-center mb-6 hidden">
+            <p class="text-lg font-medium text-indigo-600">
+                Soal <span id="current-q">1</span> dari <span id="total-q"></span>
+            </p>
+        </div>
 
-        <h2>Fakta Acak tentang Saya:</h2>
-        <ul>
-            <li>Saya bisa tidur sambil berdiri (tidak benar).</li>
-            <li>Saya selalu menyimpan kaus kaki yang hilang di dimensi lain.</li>
-            <li>Saya sering berbicara pada tanaman (dan mereka balas curhat).</li>
-            <li>Saat tidak bekerja, saya mencoba memecahkan misteri mengapa kucing suka menjatuhkan barang.</li>
-        </ul>
-
-        <hr> <h2>Hubungi Saya (Jangan Dihubungi!):</h2>
-        <p>
-            Anda bisa menemukan saya di internet, tapi lebih baik jangan. 🤫
-            Jika Anda harus: 
-            <a href="mailto:emailanda@contoh.com">Email Saya (Saya mungkin balas)</a> |
-            <a href="https://twitter.com/[username]" target="_blank">Twitter Saya (Cuma lihat-lihat)</a>
-        </p>
-        
-        <div class="joke">
-            **Jokes Hari Ini:** Kenapa programer suka tempat gelap? Karena di sana banyak **bugs**! 🐞
+        <!-- Area Konten Utama (Akan diisi oleh JS) -->
+        <div id="content-area">
+            <!-- Isi Konten Awal di sini (layar mulai) -->
         </div>
 
     </div>
 
-    <div class="footer">
-        © 2025 | Dibuat dengan 10% usaha dan 90% kopi ☕.
-    </div>
+    <script>
+        // Array berisi semua pertanyaan, pilihan, dan jawaban yang benar
+        const questions = [
+            {
+                question: "Makanan apa yang merupakan sumber energi terbaik untuk memulai hari (sarapan)?",
+                answers: ["Nasi goreng pedas", "Buah dan Oatmeal", "Permen dan Soda", "Keripik kentang"],
+                correct: "Buah dan Oatmeal"
+            },
+            {
+                question: "Berapa jam tidur yang dibutuhkan oleh remaja (usia 13-18) setiap malam untuk kesehatan optimal?",
+                answers: ["4-5 jam", "6-7 jam", "8-10 jam", "11 jam lebih"],
+                correct: "8-10 jam"
+            },
+            {
+                question: "Mengapa minum air putih dalam jumlah cukup itu sangat penting bagi tubuh?",
+                answers: ["Membuat kulit berminyak", "Menjaga tubuh terhidrasi", "Menggantikan semua makanan", "Tidak ada alasan khusus"],
+                correct: "Menjaga tubuh terhidrasi"
+            },
+            {
+                question: "Apa efek positif utama dari mencuci tangan dengan sabun secara teratur?",
+                answers: ["Membuat tangan wangi", "Meningkatkan kecepatan mengetik", "Mencegah penyebaran kuman dan penyakit", "Membuat kuku lebih panjang"],
+                correct: "Mencegah penyebaran kuman dan penyakit"
+            },
+            {
+                question: "Selain lari atau olahraga berat, aktivitas fisik sederhana apa yang sebaiknya dilakukan setiap hari?",
+                answers: ["Duduk menonton TV sepanjang hari", "Berjalan kaki atau peregangan ringan", "Tidur siang 4 jam", "Makan banyak snack"],
+                correct: "Berjalan kaki atau peregangan ringan"
+            }
+        ];
+
+        // Variabel Status Kuis
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let answerSelected = false;
+
+        // Mendapatkan elemen DOM
+        const contentArea = document.getElementById('content-area');
+        const progressArea = document.getElementById('progress-area');
+        const currentQ = document.getElementById('current-q');
+        const totalQ = document.getElementById('total-q');
+
+        // --- FUNGSI UTAMA KUIS ---
+
+        // Menampilkan layar mulai
+        function showStartScreen() {
+            progressArea.classList.add('hidden');
+            contentArea.innerHTML = `
+                <div class="text-center space-y-6">
+                    <p class="text-xl text-gray-700 font-medium">
+                        Uji pengetahuanmu tentang kebiasaan sehat! Jawab 5 pertanyaan untuk melihat seberapa hebat kamu!
+                    </p>
+                    <button class="start-btn" onclick="startQuiz()">
+                        Mulai Kuis Sekarang!
+                    </button>
+                    <p class="text-sm text-gray-500">
+                        Total ${questions.length} pertanyaan.
+                    </p>
+                </div>
+            `;
+        }
+
+        // Memulai kuis, mereset status
+        function startQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            answerSelected = false;
+            totalQ.textContent = questions.length;
+            progressArea.classList.remove('hidden');
+            displayQuestion();
+        }
+
+        // Menampilkan pertanyaan saat ini
+        function displayQuestion() {
+            // Jika semua pertanyaan sudah terjawab, tampilkan hasil
+            if (currentQuestionIndex >= questions.length) {
+                showResult();
+                return;
+            }
+
+            const qData = questions[currentQuestionIndex];
+            currentQ.textContent = currentQuestionIndex + 1;
+            answerSelected = false;
+
+            // Membangun tombol jawaban
+            const answersHtml = qData.answers.map((answer, index) => `
+                <button class="answer-btn" data-answer="${answer}" onclick="selectAnswer(this)">
+                    ${answer}
+                </button>
+            `).join('');
+
+            // Membangun tampilan pertanyaan
+            contentArea.innerHTML = `
+                <div class="p-4 bg-indigo-50 border-l-4 border-indigo-500 rounded-lg mb-6">
+                    <p class="text-2xl font-bold text-gray-900">${qData.question}</p>
+                </div>
+                <div class="space-y-4" id="answer-buttons">
+                    ${answersHtml}
+                </div>
+            `;
+        }
+
+        // Menangani pilihan jawaban
+        function selectAnswer(button) {
+            // Hanya izinkan satu pilihan per pertanyaan
+            if (answerSelected) return;
+            answerSelected = true;
+
+            const selectedAnswer = button.getAttribute('data-answer');
+            const correctAnswer = questions[currentQuestionIndex].correct;
+            let isCorrect = (selectedAnswer === correctAnswer);
+
+            // Memberi warna pada tombol jawaban
+            const allButtons = document.getElementById('answer-buttons').children;
+            Array.from(allButtons).forEach(btn => {
+                const answerText = btn.getAttribute('data-answer');
+                if (answerText === correctAnswer) {
+                    btn.classList.add('correct');
+                    btn.classList.remove('bg-indigo-50', 'text-indigo-800');
+                } else if (btn === button) {
+                    btn.classList.add('incorrect');
+                    btn.classList.remove('bg-indigo-50', 'text-indigo-800');
+                }
+                // Menonaktifkan semua tombol setelah memilih
+                btn.disabled = true;
+            });
+
+            // Memperbarui skor jika benar
+            if (isCorrect) {
+                score++;
+            }
+
+            // Menampilkan pesan dan tombol Lanjut
+            setTimeout(() => {
+                const message = isCorrect ? 
+                    '<p class="text-green-600 font-bold mt-4">🎉 Benar! Jawaban tepat sekali!</p>' : 
+                    `<p class="text-red-600 font-bold mt-4">😔 Salah. Jawaban yang benar adalah: <span class="text-green-700">${correctAnswer}</span></p>`;
+                
+                contentArea.innerHTML += message + `
+                    <button class="start-btn mt-6" onclick="nextQuestion()">
+                        Lanjut ke Soal Berikutnya
+                    </button>
+                `;
+            }, 500); // Tunda sebentar untuk efek visual
+        }
+
+        // Melanjutkan ke pertanyaan berikutnya
+        function nextQuestion() {
+            currentQuestionIndex++;
+            displayQuestion();
+        }
+
+        // Menampilkan layar hasil akhir
+        function showResult() {
+            progressArea.classList.add('hidden');
+            
+            let message = '';
+            let imageAlt = '';
+            let emoji = '';
+
+            if (score === questions.length) {
+                message = "Hebat! Kamu adalah Ahli Kesehatan! 🎉 Skor sempurna!";
+                emoji = '🏆';
+                imageAlt = '';
+            } else if (score >= questions.length / 2) {
+                message = "Bagus sekali! Kamu tahu banyak tentang kesehatan! Tetap semangat belajar!";
+                emoji = '👍';
+                imageAlt = '';
+            } else {
+                message = "Terus belajar, ya! Kesehatan itu penting. Coba lagi untuk skor yang lebih baik!";
+                emoji = '💡';
+                imageAlt = '';
+            }
+
+            contentArea.innerHTML = `
+                <div class="text-center space-y-6">
+                    <h2 class="text-4xl font-extrabold text-indigo-600">${emoji} Hasil Kuis ${emoji}</h2>
+                    <p class="text-3xl font-bold text-gray-800">Skor Akhir: ${score} / ${questions.length}</p>
+                    <p class="text-xl text-gray-700 font-medium">${message}</p>
+                    ${imageAlt}
+                    <button class="restart-btn" onclick="startQuiz()">
+                        Coba Lagi
+                    </button>
+                    <button class="start-btn bg-gray-500 hover:bg-gray-600" onclick="showStartScreen()">
+                        Kembali ke Awal
+                    </button>
+                </div>
+            `;
+        }
+
+        // Inisialisasi: Tampilkan layar mulai saat halaman dimuat
+        window.onload = showStartScreen;
+    </script>
 
 </body>
 </html>
